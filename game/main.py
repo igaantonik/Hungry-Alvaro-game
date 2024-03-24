@@ -1,5 +1,6 @@
 import pygame
 import button
+import pizza
 from enum import Enum
 
 class Mode(Enum):
@@ -109,6 +110,7 @@ def play(mode, difficulty):
         screen.blit(choosen_text, choosen_text_rect)
         alvaro()
         pygame.display.update()
+
 def main_menu():
     running = True
     while running:
