@@ -30,5 +30,5 @@ class AlvaroWithTheBoys():
             chosen_text_rect = chosen_text.get_rect()
             chosen_text_rect.center = (self.game.screen.get_width() // 2, 150)
             self.game.screen.blit(chosen_text, chosen_text_rect)
-            self.game.alvaro()
+            self.game.draw_alvaro()
             pygame.display.update()

@@ -35,10 +35,8 @@ class Pizza():
         new_image = pygame.transform.scale(self.image, (int(width * self.scale), int(height * self.scale)))
         self.rect = new_image.get_rect()
         self.rect.topleft = (self.x, self.y)
-        # self.rect.center = (surface.get_width() // 2, surface.get_height() // 2)
         surface.blit(new_image, (self.rect.x, self.rect.y))
 
     def draw_toppings(self, surface):
-
         for topping in self.toppings:
             topping.draw(surface)

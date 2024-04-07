@@ -77,7 +77,7 @@ class Game:
                 running = False
 
             self.screen.blit(self.intro_text, self.intro_text_rect)
-            self.alvaro()
+            self.draw_alvaro()
             pygame.display.update()
 
     def choose_difficulty(self, mode):
@@ -98,7 +98,7 @@ class Game:
                 self.play(mode, 3)
 
             self.screen.blit(self.difficulty_text, self.difficulty_text_rect)
-            self.alvaro()
+            self.draw_alvaro()
             pygame.display.update()
 
     def play(self, mode, difficulty):
@@ -110,7 +110,7 @@ class Game:
             chosen_mode = AlvaroWithTheBoys.AlvaroWithTheBoys(self, difficulty)
         chosen_mode.run()
 
-    def alvaro(self):
+    def draw_alvaro(self):
         self.alvaroImg = pygame.image.load("img/alvaro.png")
         self.ciaoImg = pygame.image.load("img/ciao.png")
         self.screen.blit(self.alvaroImg, (100, 450))

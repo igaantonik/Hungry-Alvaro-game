@@ -3,11 +3,6 @@ import Pizza
 import Order
 from enum import Enum
 
-class Difficulty(Enum):
-    EASY = 1
-    MEDIUM = 2
-    HARD = 3
-
 class HungryAlvaro:
     def __init__(self, game, difficulty):
         pygame.init()
@@ -21,22 +16,18 @@ class HungryAlvaro:
 
     def run(self):
         if self.difficulty == 1:
-            number_of_orders = 3
+            self.number_of_orders = 3
         elif self.difficulty == 2:
-            number_of_orders = 5
+            self.number_of_orders = 5
         else:
-            number_of_orders = 8
-
-        for i in range(number_of_orders):
-            order = Order.Order(Pizza.Pizza(160, 150, 0.70), 4, 2, 5, self, self.game)
-            self.orders.append(order)
-
+            self.number_of_orders = 8
         self.next_order()
 
     def next_order(self):
         self.current_order += 1
-        if self.current_order < len(self.orders):
-            order = self.orders[self.current_order]
+        if self.current_order < self.number_of_orders:
+            order = Order.Order(Pizza.Pizza(160, 150, 0.70), 4, 2, 5, self, self.game)
+            self.orders.append(order)
             order.make_order()
         else:
             self.display_final_score()
