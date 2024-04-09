@@ -1,3 +1,5 @@
+import time
+
 import pygame
 import Button
 import Topping
@@ -44,6 +46,14 @@ class Order:
         score_text_rect.topleft = (280, 520)
         self.game.screen.blit(score_text, score_text_rect)
 
+    def display_timer(self):
+        timer = round(self.mode.end_time - time.time(),2)
+        text = ("Time left: "+ str(timer))
+        timer_text = self.game.font.render(text, True, (255, 255, 255))
+        timer_text_rect = timer_text.get_rect()
+        timer_text_rect.topleft = (170, 5)
+        self.game.screen.blit(timer_text, timer_text_rect)
+
     def check_order(self):
         made = self.pizza.toppings
         required = self.required_pizza.toppings
@@ -63,12 +73,17 @@ class Order:
                     running = False
                     pygame.quit()
 
+            if self.mode.end_time <= time.time():
+                self.check_order()
+                self.mode.display_final_score()
+
             self.pizza.draw_pizza(self.game.screen)
             self.display_order()
             self.counter.draw()
             self.display_buttons()
             self.pizza.draw_toppings(self.game.screen)
             self.display_score()
+            self.display_timer()
             pygame.display.update()
 
     def setup_buttons(self):
@@ -84,6 +99,12 @@ class Order:
 
         pineapple_img = pygame.image.load("img/pineapple.png")
         self.pineapple_button = Button.Button(15, 230, pineapple_img, 0.15)
+
+        ham_img = pygame.image.load("img/ham.png")
+        self.ham_button = Button.Button(15, 300, ham_img, 0.15)
+
+        shrimp_img = pygame.image.load("img/shrimp.png")
+        self.shrimp_button = Button.Button(15, 370, shrimp_img, 0.15)
 
         # "+", "-"
         minus_img = pygame.image.load("buttons_img/minus_button.png")
@@ -126,6 +147,19 @@ class Order:
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+        if self.ham_button.draw(self.game.screen):
+            top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+                                  Topping.ToppingName(5),
+                                  1,
+                                  self.pizza.scale)
+            self.pressed_topping = top
+        if self.shrimp_button.draw(self.game.screen):
+            top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+                                  Topping.ToppingName(6),
+                                  1,
+                                  self.pizza.scale)
+            self.pressed_topping = top
+
 
         # Counter buttons
         if self.plus_button.draw(self.game.screen):
@@ -143,5 +177,5 @@ class Order:
 
         if self.done_button.draw(self.game.screen):
             self.check_order()
-            pygame.mouse.set_pos(self.game.screen.get_width() // 2, self.game.screen.get_height() // 2)
+            # pygame.mouse.set_pos(self.game.screen.get_width() // 2, self.game.screen.get_height() // 2)
             self.mode.next_order()
