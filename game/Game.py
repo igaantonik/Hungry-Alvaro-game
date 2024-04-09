@@ -64,13 +64,13 @@ class Game:
                     running = False
 
             if self.hungry_alvaro_button.draw(self.screen):
-                pygame.mouse.set_pos(self.screen.get_width() // 2, self.screen.get_height() // 2)
+                # pygame.mouse.set_pos(self.screen.get_width() // 2, self.screen.get_height() // 2)
                 self.choose_difficulty(1)
             if self.moody_alvaro_button.draw(self.screen):
-                pygame.mouse.set_pos(self.screen.get_width() // 2, self.screen.get_height() // 2)
+                # pygame.mouse.set_pos(self.screen.get_width() // 2, self.screen.get_height() // 2)
                 self.choose_difficulty(2)
             if self.alvaro_with_the_boys_button.draw(self.screen):
-                pygame.mouse.set_pos(self.screen.get_width() // 2, self.screen.get_height() // 2)
+                # pygame.mouse.set_pos(self.screen.get_width() // 2, self.screen.get_height() // 2)
                 self.choose_difficulty(3)
 
             if self.exit_button.draw(self.screen):
