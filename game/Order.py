@@ -8,7 +8,7 @@ import Counter
 
 
 class Order:
-    def __init__(self, pizza, toppings_amount, min_amount, max_amount, mode, game):
+    def __init__(self, pizza, toppings_amount, min_amount, max_amount, order_owner, mode, game):
         self.pizza = pizza
         self.game = game
         self.mode = mode
@@ -17,18 +17,37 @@ class Order:
         self.required_pizza.generate_pizza(toppings_amount, min_amount, max_amount)
         self.counter = Counter.Counter(170, 80, game)
         self.pressed_topping = None
+        self.order_owner = order_owner
+        self.note_button = None
         self.setup_buttons()
 
-    def display_order(self):
+    def display_orders(self):
         position = 0
+        for order in self.mode.orders:
+            # note_img = pygame.image.load("buttons_img/note_button.png")
+            # self.note_button = Button.Button(540, 0, note_img, 1.25)
+            position = order.display_order(position)
+
+    def display_order(self, position):
+        font = pygame.font.SysFont("", 30)
+        text = str(self.order_owner)
+        topping_text = self.game.font.render(text, True, (102, 153, 255))
+        topping_text_rect = topping_text.get_rect()
+        topping_text_rect.topleft = (580, 5 + position * 30)
+        self.game.screen.blit(topping_text, topping_text_rect)
+        position += 1
+
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
-            topping_text = self.game.font.render(text, True, (255, 255, 255))
+            topping_text = font.render(text, True, (255, 255, 255))
             topping_text_rect = topping_text.get_rect()
-            topping_text_rect.topleft = (540, 30 + position * 30)
+            topping_text_rect.topleft = (580, 5 + position * 30)
             self.game.screen.blit(topping_text, topping_text_rect)
             position += 1
+        position += 1
+        return position
 
+    def display_pressed_topping(self):
         if self.pressed_topping:
             text = (str(self.pressed_topping))
         else:
@@ -47,8 +66,8 @@ class Order:
         self.game.screen.blit(score_text, score_text_rect)
 
     def display_timer(self):
-        timer = round(self.mode.end_time - time.time(),2)
-        text = ("Time left: "+ str(timer))
+        timer = round(self.mode.end_time - time.time(), 2)
+        text = ("Time left: " + str(timer))
         timer_text = self.game.font.render(text, True, (255, 255, 255))
         timer_text_rect = timer_text.get_rect()
         timer_text_rect.topleft = (170, 5)
@@ -61,7 +80,7 @@ class Order:
         for i in range(len(required)):
             if i < len(made):
                 if made[i].name == required[i].name and made[i].quantity == required[i].quantity:
-                    self.mode.score += 100//(self.toppings_amount + 1)
+                    self.mode.score += 100 // (self.toppings_amount + 1)
 
     def make_order(self):
         running = True
@@ -75,10 +94,15 @@ class Order:
 
             if self.mode.end_time <= time.time():
                 self.check_order()
-                self.mode.display_final_score()
+                if self.mode.name == "Moody Alvaro":
+                    self.mode.set_end_time()
+                    self.mode.next_order()
+                if self.mode.name == "Hungry Alvaro":
+                    self.mode.display_final_score()
 
             self.pizza.draw_pizza(self.game.screen)
-            self.display_order()
+            self.display_orders()
+            self.display_pressed_topping()
             self.counter.draw()
             self.display_buttons()
             self.pizza.draw_toppings(self.game.screen)
@@ -160,7 +184,6 @@ class Order:
                                   self.pizza.scale)
             self.pressed_topping = top
 
-
         # Counter buttons
         if self.plus_button.draw(self.game.screen):
             self.counter.increment()
@@ -173,9 +196,14 @@ class Order:
 
         if self.add_button.draw(self.game.screen):
             self.pressed_topping.quantity = self.counter.value
-            self.pizza.add_topping(self.pressed_topping)
+            if self.pressed_topping.quantity > 0:
+                self.pizza.add_topping(self.pressed_topping)
 
-        if self.done_button.draw(self.game.screen):
-            self.check_order()
-            # pygame.mouse.set_pos(self.game.screen.get_width() // 2, self.game.screen.get_height() // 2)
-            self.mode.next_order()
+        # if self.note_button.draw(self.game.screen):
+        #     print("klik")
+        #     print(self.order_owner)
+
+        if self.mode.name == "Hungry Alvaro":
+            if self.done_button.draw(self.game.screen):
+                self.check_order()
+                self.mode.next_order()
