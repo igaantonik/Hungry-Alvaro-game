@@ -19,7 +19,7 @@ class Pizza():
         self.toppings.pop()
 
     def generate_pizza(self, toppings_amount, min_amount_topping, max_amount_topping):
-        available_toppings = [i for i in range(2, 7)]
+        available_toppings = [i for i in range(2, 8)]
         cheese = Topping.Topping(self.x, self.y, Topping.ToppingName(1), 1, self.scale)
         self.toppings.append(cheese)
         random.shuffle(available_toppings)

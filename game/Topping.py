@@ -7,7 +7,7 @@ class ToppingName(Enum):
     SALAMI = 2
     HAM = 5
     SHRIMP = 6
-    CHICKEN = 7
+    ANCHOVIES = 7
     MUSHROOMS = 3
     ONIONS = 8
     PEPPERS = 9
@@ -48,6 +48,9 @@ class Topping():
 
         if self.name.value == 6:
             self.image = pygame.image.load("img/shrimp.png")
+
+        if self.name.value == 7:
+            self.image = pygame.image.load("img/anchovies.png")
 
         # more to do
 
