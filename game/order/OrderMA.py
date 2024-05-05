@@ -8,8 +8,14 @@ class OrderMA(AbstractOrder):
     def __init__(self, pizza, toppings_amount, min_amount, max_amount, order_owner, mode, played_game):
         super().__init__(pizza, toppings_amount, min_amount, max_amount, order_owner, mode, played_game)
 
-    def display_order(self, position=0):
+    def display_order(self, position=0,color=1):
         # position = 0
+        text = str(self.order_owner)
+        topping_text = self.played_game.font.render(text, True, (207, 62, 62))
+        topping_text_rect = topping_text.get_rect()
+        topping_text_rect.topleft = (540, 20)
+        position += 1
+        self.played_game.screen.blit(topping_text, topping_text_rect)
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
             topping_text = self.played_game.font.render(text, True, (255, 255, 255))

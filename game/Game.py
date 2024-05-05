@@ -68,11 +68,11 @@ class Game:
 
     def play(self, mode, difficulty):
         if mode == 1:
-            chosen_mode = HungryAlvaro.HungryAlvaro(self, difficulty, 'HungryAlvaro')
+            chosen_mode = HungryAlvaro.HungryAlvaro(self, difficulty, 'Hungry Alvaro')
         elif mode == 2:
-            chosen_mode = MoodyAlvaro.MoodyAlvaro(self, difficulty,'MoodyAlvaro')
+            chosen_mode = MoodyAlvaro.MoodyAlvaro(self, difficulty,'Moody Alvaro')
         else:
-            chosen_mode = AlvaroWithTheBoys.AlvaroWithTheBoys(self, difficulty, 'AlvaroWithTheBoys')
+            chosen_mode = AlvaroWithTheBoys.AlvaroWithTheBoys(self, difficulty, 'Alvaro With The Boys')
         chosen_mode.run()
 
     def draw_alvaro(self):

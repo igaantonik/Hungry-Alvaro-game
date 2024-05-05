@@ -1,3 +1,5 @@
+import random
+
 import game.Pizza
 import time
 import game.Button
@@ -21,6 +23,6 @@ class HungryAlvaro(AbstractMode):
 
     def next_order(self):
         self.current_order += 1
-        order = game.order.OrderHA.OrderHA(game.Pizza.Pizza(160, 150, 0.70), 4, 2, 5, "Alvaro", self, self.game)
+        order = game.order.OrderHA.OrderHA(game.Pizza.Pizza(160, 150, 0.70), random.randint(2,5), 2, 5, "Alvaro", self, self.game)
         self.orders.append(order)
         order.make_order()
