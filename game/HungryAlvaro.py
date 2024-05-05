@@ -13,7 +13,6 @@ class HungryAlvaro:
         self.name = "Hungry Alvaro"
         self.current_order = 0
         self.orders = []
-        self.play_time = 0
         self.end_time = 0
 
     def run(self):
@@ -30,9 +29,6 @@ class HungryAlvaro:
         self.next_order()
 
     def next_order(self):
-        if self.current_order == 1:
-            self.orders.pop()
-            self.current_order = 0
         self.current_order += 1
         order = Order.Order(Pizza.Pizza(160, 150, 0.70), 4, 2, 5, "Alvaro", self, self.game)
         self.orders.append(order)

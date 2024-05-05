@@ -22,31 +22,15 @@ class Order:
         self.setup_buttons()
         self.end_time = 0
 
-    def display_orders(self):
+    def display_order(self):
         position = 0
-        for order in self.mode.orders:
-            # note_img = pygame.image.load("buttons_img/note_button.png")
-            # self.note_button = Button.Button(540, 0, note_img, 1.25)
-            position = order.display_order(position)
-
-    def display_order(self, position):
-        font = pygame.font.SysFont("", 30)
-        text = str(self.order_owner)
-        topping_text = self.game.font.render(text, True, (102, 153, 255))
-        topping_text_rect = topping_text.get_rect()
-        topping_text_rect.topleft = (580, 5 + position * 30)
-        self.game.screen.blit(topping_text, topping_text_rect)
-        position += 1
-
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
-            topping_text = font.render(text, True, (255, 255, 255))
+            topping_text = self.game.font.render(text, True, (255, 255, 255))
             topping_text_rect = topping_text.get_rect()
-            topping_text_rect.topleft = (580, 5 + position * 30)
+            topping_text_rect.topleft = (540, 30 + position * 30)
             self.game.screen.blit(topping_text, topping_text_rect)
             position += 1
-        position += 1
-        return position
 
     def display_pressed_topping(self):
         if self.pressed_topping:
@@ -102,7 +86,7 @@ class Order:
                     self.mode.display_final_score()
 
             self.pizza.draw_pizza(self.game.screen)
-            self.display_orders()
+            self.display_order()
             self.display_pressed_topping()
             self.counter.draw()
             self.display_buttons()
@@ -209,10 +193,6 @@ class Order:
             self.pressed_topping.quantity = self.counter.value
             if self.pressed_topping.quantity > 0:
                 self.pizza.add_topping(self.pressed_topping)
-
-        # if self.note_button.draw(self.game.screen):
-        #     print("klik")
-        #     print(self.order_owner)
 
         if self.mode.name == "Hungry Alvaro":
             if self.done_button.draw(self.game.screen):

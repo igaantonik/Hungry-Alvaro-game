@@ -32,9 +32,7 @@ class MoodyAlvaro:
             self.end_time = time.time() + 10
 
     def next_order(self):
-        if len(self.orders) == 1:
-            self.orders.pop()
-        if self.current_order < self.all_orders-1:
+        if self.current_order < self.all_orders:
             self.current_order += 1
             order = Order.Order(Pizza.Pizza(160, 150, 0.70), 4, 2, 5, "Alvaro", self, self.game)
             self.orders.append(order)
