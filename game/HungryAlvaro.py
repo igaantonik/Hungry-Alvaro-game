@@ -1,4 +1,5 @@
 import json
+import random
 
 import pygame
 import Pizza
@@ -39,7 +40,7 @@ class HungryAlvaro:
 
     def next_order(self):
         self.current_order += 1
-        order = Order.Order(Pizza.Pizza(160, 150, 0.70), 4, 2, 5, "Alvaro", self, self.game)
+        order = Order.Order(Pizza.Pizza(160, 150, 0.70), random.randint(2,5), 2, 5, "Alvaro", self, self.game)
         self.orders.append(order)
         order.make_order()
 
@@ -70,10 +71,10 @@ class HungryAlvaro:
 
     def setup_final_buttons(self):
         restart_img = pygame.image.load("buttons_img/button_restart.png")
-        self.restart_button = Button.Button(500, 360, restart_img, 1)
+        self.restart_button = Button.Button(280, 360, restart_img, 1)
 
         exit_button_img = pygame.image.load("buttons_img/button_exit.png")
-        self.exit_button = Button.Button(500, 415, exit_button_img, 1)
+        self.exit_button = Button.Button(280, 415, exit_button_img, 1)
 
 
     def display_final_buttons(self):

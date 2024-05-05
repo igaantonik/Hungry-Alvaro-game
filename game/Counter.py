@@ -1,9 +1,12 @@
 class Counter:
     def __init__(self, x, y, game):
         self.game = game
-        self.value = 0
+        self.value = 1
         self.x = x
         self.y = y
+
+    def restart(self):
+        self.value = 1
 
     def increment(self):
         if self.value < 10:

@@ -1,7 +1,12 @@
 import json
+from enum import Enum
 
 import pygame
 
+class Difficulty(Enum):
+    EASY = 1
+    MEDIUM = 2
+    HARD = 3
 
 class ScoreManager:
 
@@ -25,24 +30,27 @@ class ScoreManager:
                 if event.type == pygame.QUIT:
                     running = False
 
-            y_offset = 50
+            score_text = pygame.font.SysFont("", 60).render("Your latest results!", True, (255, 255, 255))
+            score_text_rect = score_text.get_rect()
+            score_text_rect.center = (self.screen.get_width() // 2, 30)
+            self.screen.blit(score_text, score_text_rect)
+
+            y_offset = 60
             for game_mode, mode_results in self.results.items():
-                mode_text = self.font.render(f"{game_mode}:", True, (255, 255, 255))
+                mode_text = pygame.font.SysFont("", 50).render(f"{game_mode}:", True, (207, 62, 62))
                 self.screen.blit(mode_text, (50, y_offset))
-                y_offset += 30
+                best_text = self.font.render("High score:", True, (207, 62, 62))
+                self.screen.blit(best_text, (600, y_offset))
+                y_offset += 50
                 for difficulty, scores in mode_results.items():
-                    # Sortowanie wyników od najwyższego do najniższego
-                    # Wyświetlenie 5 najnowszych wyników
                     recent_scores = scores[::-1][:5]
                     recent_scores_text = ', '.join(map(str, recent_scores))
-                    recent_text = self.font.render(f"Difficulty {difficulty}: {recent_scores_text}", True, (255, 255, 255))
+                    recent_text = self.font.render(f"{Difficulty(int(difficulty)).name}: {recent_scores_text}", True, (117, 105, 104))
                     self.screen.blit(recent_text, (70, y_offset))
-                    y_offset += 30
 
-                    # Wyświetlenie najlepszego wyniku
                     best_score = max(scores, default=0)
-                    best_text = self.font.render(f"Best Score: {best_score}", True, (255, 255, 255))
-                    self.screen.blit(best_text, (70, y_offset))
+                    best_score_value = self.font.render(f"{best_score}", True, (255, 255, 255))
+                    self.screen.blit(best_score_value, (650, y_offset))
                     y_offset += 30
                 y_offset += 30
 
