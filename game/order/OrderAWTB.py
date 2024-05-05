@@ -106,6 +106,7 @@ class OrderAWTB(AbstractOrder):
 
 
     def make_order(self):
+        print(self.mode.orders)
         running = True
         while running:
 
@@ -134,5 +135,6 @@ class OrderAWTB(AbstractOrder):
         super().display_buttons()
         if self.done_button.draw(self.played_game.screen):
             self.check_order()
+            self.mode.orders.remove(self)
             self.mode.next_order()
 

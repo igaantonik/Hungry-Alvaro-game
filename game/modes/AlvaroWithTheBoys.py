@@ -4,7 +4,7 @@ import game.Pizza
 import time
 import game.Button
 import game.Game
-from game.order.OrderAWTB import OrderAWTB
+import game.order.OrderAWTB
 from game.modes.AbstractMode import AbstractMode
 
 
@@ -23,20 +23,19 @@ class AlvaroWithTheBoys(AbstractMode):
             self.end_time = time.time() + 60
             self.order_end_time = 30
         elif self.difficulty == 2:
-            self.end_time = time.time() + 40
+            self.end_time = time.time() + 60
             self.order_end_time = 15
         else:
-            self.end_time = time.time() + 30
+            self.end_time = time.time() + 60
             self.order_end_time = 10
 
     def init_orders(self):
-
         for i in range(self.start_nr_orders):
             self.current_order += 1
             name = self.generate_name()
             if i == 0:
                 name = "Alvaro"
-            order = OrderAWTB(game.Pizza.Pizza(160, 150, 0.70), random.randint(2, 5), 2, 5, name, self,
+            order = game.order.OrderAWTB.OrderAWTB(game.Pizza.Pizza(160, 150, 0.70), random.randint(2, 5), 2, 5, name, self,
                               time.time() + (i + 1) * self.order_end_time, self.game)
             self.orders.append(order)
 
@@ -52,7 +51,7 @@ class AlvaroWithTheBoys(AbstractMode):
 
     def next_order(self):
         self.current_order += 1
-        order = OrderAWTB(game.Pizza.Pizza(160, 150, 0.70), random.randint(2, 5), 2, 5, self.generate_name(), self,
+        order = game.order.OrderAWTB.OrderAWTB(game.Pizza.Pizza(160, 150, 0.70), random.randint(2, 5), 2, 5, self.generate_name(), self,
                           time.time() + self.order_end_time * 1.5, self.game)
 
         self.orders.append(order)
