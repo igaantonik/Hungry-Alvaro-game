@@ -24,6 +24,12 @@ class Order:
 
     def display_order(self):
         position = 0
+        text = str(self.order_owner)
+        topping_text = self.game.font.render(text, True, (207, 62, 62))
+        topping_text_rect = topping_text.get_rect()
+        topping_text_rect.topleft = (540, 20)
+        position += 1
+        self.game.screen.blit(topping_text, topping_text_rect)
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
             topping_text = self.game.font.render(text, True, (255, 255, 255))
@@ -143,34 +149,45 @@ class Order:
                                   Topping.ToppingName(1), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.mushrooms_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(3), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.salami_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(2), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.pineapple_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(4),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.ham_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(5),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.shrimp_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(6),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
 
         if self.anchovie_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
@@ -178,6 +195,7 @@ class Order:
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
 
         # Counter buttons
         if self.plus_button.draw(self.game.screen):
@@ -190,9 +208,10 @@ class Order:
             self.pizza.remove_last_topping()
 
         if self.add_button.draw(self.game.screen):
-            self.pressed_topping.quantity = self.counter.value
-            if self.pressed_topping.quantity > 0:
-                self.pizza.add_topping(self.pressed_topping)
+            if self.pressed_topping:
+                self.pressed_topping.quantity = self.counter.value
+                if self.pressed_topping.quantity > 0:
+                    self.pizza.add_topping(self.pressed_topping)
 
         if self.mode.name == "Hungry Alvaro":
             if self.done_button.draw(self.game.screen):

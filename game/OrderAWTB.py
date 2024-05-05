@@ -1,3 +1,4 @@
+import os
 import time
 
 import pygame
@@ -30,74 +31,71 @@ class OrderAWTB:
         for order in self.mode.orders:
             if order.end_time > time.time():
                 order.display_order_name_button(n)
-                position += 1
                 n += 1
-                position = order.display_order(position)
+                if order == self:
+                    color = pygame.Color(117, 105, 104)
+                else:
+                    color = pygame.Color(255, 255, 255)
+                position = order.display_order(position, color)
             else:
                 self.mode.orders.remove(order)
                 self.mode.score -= 40
                 self.mode.next_order()
 
-    def display_order(self, position):
+    def display_order(self, position, color):
         font = pygame.font.SysFont("", 25)
-        self.display_order_timer(position)
-        position += 1
         text = str(self.order_owner)
-        topping_text = self.game.font.render(text, True, (102, 153, 255))
+        topping_text = self.game.font.render(text, True, (207, 62, 62))
         topping_text_rect = topping_text.get_rect()
         topping_text_rect.topleft = (580, 5 + position * 22)
         self.game.screen.blit(topping_text, topping_text_rect)
         position += 1
-
+        self.display_order_timer(position)
+        position += 1
+        topping_counter = 0
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
-            topping_text = font.render(text, True, (255, 255, 255))
+            topping_text = font.render(text, True, color)
             topping_text_rect = topping_text.get_rect()
             topping_text_rect.topleft = (580, 5 + position * 22)
             self.game.screen.blit(topping_text, topping_text_rect)
+            topping_counter += 1
             position += 1
+
+        if topping_counter < 6:
+            position += 6-topping_counter
+
         position += 1
         return position
 
-
     def setup_order_name_button(self):
-        print("in setup_order_name_button")
+        make_img = pygame.image.load("buttons_img/button_make.png")
         if len(self.mode.orders) > 2:
-            position = 0
-            self.boy_name_button1 = Button.Button(580, 5 + position * 200, "make order")
-            position += 1
-            self.boy_name_button2 = Button.Button(580, 5 + position * 200, "make order")
-            position += 1
-            self.boy_name_button3 = Button.Button(580, 5 + position * 200, "make order")
+            self.boy_name_button1 = Button.Button(715, 150, make_img, 0.5)
+            self.boy_name_button2 = Button.Button(715, 350, make_img, 0.5)
+            self.boy_name_button3 = Button.Button(715, 550, make_img, 0.5)
 
-
-    def display_order_name_button(self,n):
+    def display_order_name_button(self, n):
         if not self.flag:
             self.setup_order_name_button()
             self.flag = True
         if n == 0:
             if self.boy_name_button1.draw(self.game.screen):
-                print("clicked1")
                 self.make_order()
         if n == 1:
             if self.boy_name_button2.draw(self.game.screen):
-                print("clicked2")
                 self.make_order()
         if n == 2:
             if self.boy_name_button3.draw(self.game.screen):
-                print("clicked3")
                 self.make_order()
-    # def setup_order_name_button(self, position):
-    #     self.boy_name_button = Button.Button(580, 5 + position * 30,  self.order_owner)
 
-
-    def display_order_timer(self,position):
+    def display_order_timer(self, position):
         font = pygame.font.SysFont("", 25)
         timer = round(self.end_time - time.time(), 2)
-        text = ("Time left: " + str(timer))
-        timer_text = font.render(text, True, (255, 255, 255))
+        text = ("left: " + str(timer))
+        timer_text = font.render(text, True, (117, 105, 104))
         timer_text_rect = timer_text.get_rect()
-        timer_text_rect.topleft = (580, 5 + position * 22)
+        timer_text_rect.topleft = (715, 110 + position * 22)
         self.game.screen.blit(timer_text, timer_text_rect)
 
     def display_pressed_topping(self):
@@ -118,17 +116,17 @@ class OrderAWTB:
         score_text_rect.topleft = (280, 520)
         self.game.screen.blit(score_text, score_text_rect)
 
-    # def display_timer(self):
-    #     timer = round(self.mode.end_time - time.time(), 2)
-    #     text = ("Time left: " + str(timer))
-    #     timer_text = self.game.font.render(text, True, (255, 255, 255))
-    #     timer_text_rect = timer_text.get_rect()
-    #     timer_text_rect.topleft = (170, 5)
-    #     self.game.screen.blit(timer_text, timer_text_rect)
+    def display_timer(self):
+        timer = round(self.mode.end_time - time.time(), 2)
+        text = "Time left: " + (str(timer))
+        timer_text = self.game.font.render(text, True, (255, 255, 255))
+        timer_text_rect = timer_text.get_rect()
+        timer_text_rect.topleft = (340, 80)
+        self.game.screen.blit(timer_text, timer_text_rect)
 
     def display_order_name(self):
         text = ("Order for: " + self.order_owner)
-        owner_text = self.game.font.render(text, True, (255, 255, 255))
+        owner_text = self.game.font.render(text, True, (207, 62, 62))
         owner_text_rect = owner_text.get_rect()
         owner_text_rect.topleft = (170, 5)
         self.game.screen.blit(owner_text, owner_text_rect)
@@ -154,14 +152,8 @@ class OrderAWTB:
 
             if self.mode.end_time <= time.time():
                 self.check_order()
-                if self.mode.name == "AlvaroWithTheBoys":
+                if self.mode.name == "Alvaro With The Boys":
                     self.mode.display_final_score()
-
-            # if self.end_time <= time.time():
-            #     # self.check_order()
-            #     self.mode.score -= 40
-            #     self.mode.orders.remove(self)
-            #     self.mode.next_order()
 
             self.pizza.draw_pizza(self.game.screen)
             self.display_orders()
@@ -170,7 +162,7 @@ class OrderAWTB:
             self.display_buttons()
             self.pizza.draw_toppings(self.game.screen)
             self.display_score()
-            # self.display_timer()
+            self.display_timer()
             self.display_order_name()
             pygame.display.update()
 
@@ -225,34 +217,45 @@ class OrderAWTB:
                                   Topping.ToppingName(1), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.mushrooms_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(3), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.salami_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(2), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.pineapple_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(4),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.ham_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(5),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
+
         if self.shrimp_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   Topping.ToppingName(6),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
 
         if self.anchovie_button.draw(self.game.screen):
             top = Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
@@ -260,6 +263,7 @@ class OrderAWTB:
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
+            self.counter.restart()
 
         # Counter buttons
         if self.plus_button.draw(self.game.screen):
@@ -272,9 +276,10 @@ class OrderAWTB:
             self.pizza.remove_last_topping()
 
         if self.add_button.draw(self.game.screen):
-            self.pressed_topping.quantity = self.counter.value
-            if self.pressed_topping.quantity > 0:
-                self.pizza.add_topping(self.pressed_topping)
+            if self.pressed_topping:
+                self.pressed_topping.quantity = self.counter.value
+                if self.pressed_topping.quantity > 0:
+                    self.pizza.add_topping(self.pressed_topping)
 
         if self.done_button.draw(self.game.screen):
             self.check_order()

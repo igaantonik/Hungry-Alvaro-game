@@ -1,5 +1,5 @@
 import json
-
+import random
 import pygame
 import Pizza
 import Order
@@ -19,7 +19,7 @@ class AlvaroWithTheBoys():
         self.is_running = True
         self.game = game
         self.score = 0
-        self.name = "AlvaroWithTheBoys"
+        self.name = "Alvaro With The Boys"
         self.current_order = -1
         self.orders = []
         self.all_orders = 3
@@ -47,14 +47,14 @@ class AlvaroWithTheBoys():
             self.order_end_time = 10
 
     def init_orders(self):
+
         for i in range(self.start_nr_orders):
             self.current_order += 1
-            order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), 4, 2, 5,"Alvaro" + str(i),self, time.time() + (i+1)*self.order_end_time, self.game)
+            name = self.generate_name()
+            if i == 0:
+                name = "Alvaro"
+            order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), random.randint(2,5), 2, 5 ,name, self, time.time() + (i+1)*self.order_end_time, self.game)
             self.orders.append(order)
-        # for i in range(3):
-        #     self.current_order += 1
-        #     order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), 4, 2, 5,"Alvaro" + str(i),self, time.time() + (i+1)*self.order_end_time, self.game)
-        #     self.orders.append(order)
 
         self.orders[0].make_order()
 
@@ -62,10 +62,17 @@ class AlvaroWithTheBoys():
     def next_order(self):
         self.all_orders += 1
         self.current_order += 1
-        order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), 4, 2, 5, "Alvaro" + str(self.all_orders - 1), self, time.time() + self.order_end_time*1.5,self.game)
+        order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), random.randint(2,5), 2, 5, self.generate_name(), self, time.time() + self.order_end_time*1.5,self.game)
         self.orders.append(order)
         order.make_order()
 
+    def generate_name(self):
+        names = [
+            "James", "John", "Robert", "Michael", "William",
+            "David", "Richard", "Joseph", "Thomas", "Charles",
+            "Christopher", "Daniel", "Matthew", "Anthony", "Mark"
+        ]
+        return random.choice(names)
 
     def display_final_score(self):
         self.results[self.name][str(self.difficulty)].append(self.score)
@@ -93,13 +100,12 @@ class AlvaroWithTheBoys():
 
             pygame.display.update()
 
-
     def setup_final_buttons(self):
         restart_img = pygame.image.load("buttons_img/button_restart.png")
-        self.restart_button = Button.Button(500, 360, restart_img, 1)
+        self.restart_button = Button.Button(280, 360, restart_img, 1)
 
         exit_button_img = pygame.image.load("buttons_img/button_exit.png")
-        self.exit_button = Button.Button(500, 415, exit_button_img, 1)
+        self.exit_button = Button.Button(280, 415, exit_button_img, 1)
 
 
     def display_final_buttons(self):
