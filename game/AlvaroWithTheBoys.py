@@ -43,6 +43,10 @@ class AlvaroWithTheBoys():
             self.current_order += 1
             order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), 4, 2, 5,"Alvaro" + str(i),self, time.time() + (i+1)*self.order_end_time, self.game)
             self.orders.append(order)
+        # for i in range(3):
+        #     self.current_order += 1
+        #     order = OrderAWTB(Pizza.Pizza(160, 150, 0.70), 4, 2, 5,"Alvaro" + str(i),self, time.time() + (i+1)*self.order_end_time, self.game)
+        #     self.orders.append(order)
 
         self.orders[0].make_order()
 

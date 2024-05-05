@@ -20,14 +20,16 @@ class OrderAWTB:
         self.order_owner = order_owner
         self.note_button = None
         self.setup_buttons()
+        self.setup_order_name_button()
         self.end_time = end_time
+        self.flag = False
 
     def display_orders(self):
         position = 0
         n = 0
         for order in self.mode.orders:
             if order.end_time > time.time():
-                order.display_order_name_button(position)
+                order.display_order_name_button(n)
                 position += 1
                 n += 1
                 position = order.display_order(position)
@@ -40,6 +42,12 @@ class OrderAWTB:
         font = pygame.font.SysFont("", 25)
         self.display_order_timer(position)
         position += 1
+        text = str(self.order_owner)
+        topping_text = self.game.font.render(text, True, (102, 153, 255))
+        topping_text_rect = topping_text.get_rect()
+        topping_text_rect.topleft = (580, 5 + position * 22)
+        self.game.screen.blit(topping_text, topping_text_rect)
+        position += 1
 
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
@@ -51,12 +59,34 @@ class OrderAWTB:
         position += 1
         return position
 
-    def display_order_name_button(self,position):
-        self.boy_name_button = Button.Button(580, 5 + position * 22, self.order_owner)
-        if self.boy_name_button.draw(self.game.screen):
-            print("clicked1")
-            self.make_order()
 
+    def setup_order_name_button(self):
+        print("in setup_order_name_button")
+        if len(self.mode.orders) > 2:
+            position = 0
+            self.boy_name_button1 = Button.Button(580, 5 + position * 200, "make order")
+            position += 1
+            self.boy_name_button2 = Button.Button(580, 5 + position * 200, "make order")
+            position += 1
+            self.boy_name_button3 = Button.Button(580, 5 + position * 200, "make order")
+
+
+    def display_order_name_button(self,n):
+        if not self.flag:
+            self.setup_order_name_button()
+            self.flag = True
+        if n == 0:
+            if self.boy_name_button1.draw(self.game.screen):
+                print("clicked1")
+                self.make_order()
+        if n == 1:
+            if self.boy_name_button2.draw(self.game.screen):
+                print("clicked2")
+                self.make_order()
+        if n == 2:
+            if self.boy_name_button3.draw(self.game.screen):
+                print("clicked3")
+                self.make_order()
     # def setup_order_name_button(self, position):
     #     self.boy_name_button = Button.Button(580, 5 + position * 30,  self.order_owner)
 
