@@ -1,8 +1,11 @@
+import json
+
 import pygame
 import Button
 import HungryAlvaro
 import MoodyAlvaro
 import AlvaroWithTheBoys
+from ScoreManager import ScoreManager
 
 class Game:
     def __init__(self):
@@ -14,6 +17,8 @@ class Game:
         self.font = pygame.font.SysFont("", 40)
         self.setup_buttons()
         self.setup_text()
+        with open("results.json", "r") as json_file:
+            self.results = json.load(json_file)
 
     def setup_buttons(self):
         
@@ -44,6 +49,9 @@ class Game:
         # Hard button
         hard_button_img = pygame.image.load("buttons_img/button_hard.png")
         self.hard_button = Button.Button(500, 360, hard_button_img, 1)
+
+        results_button_img = pygame.image.load("buttons_img/button_results.png")
+        self.results_button = Button.Button(500, 470, results_button_img, 1)
     
     def setup_text(self):
         self.intro_text = self.font.render("Choose your mode", True, (255, 255, 255))
@@ -69,6 +77,9 @@ class Game:
                 self.choose_difficulty(2)
             if self.alvaro_with_the_boys_button.draw(self.screen):
                 self.choose_difficulty(3)
+
+            if self.results_button.draw(self.screen):
+                ScoreManager.display_results(self)
 
             if self.exit_button.draw(self.screen):
                 running = False

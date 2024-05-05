@@ -1,7 +1,13 @@
+import json
+
 import pygame
 import Pizza
 import Order
 import time
+import Button
+import Game
+from ScoreManager import ScoreManager
+
 
 class HungryAlvaro:
     def __init__(self, game, difficulty):
@@ -15,6 +21,9 @@ class HungryAlvaro:
         self.orders = []
         self.play_time = 0
         self.end_time = 0
+        self.setup_final_buttons()
+        with open("results.json", "r") as json_file:
+            self.results = json.load(json_file)
 
     def run(self):
         self.set_end_time()
@@ -39,6 +48,8 @@ class HungryAlvaro:
         order.make_order()
 
     def display_final_score(self):
+        self.results[self.name][str(self.difficulty)].append(self.score)
+        ScoreManager.save_score(self.results)
         running = True
         while running:
             self.game.screen.fill((242, 177, 202))
@@ -53,8 +64,26 @@ class HungryAlvaro:
             score_text_rect = score_text.get_rect()
             score_text_rect.center = (self.game.screen.get_width()//2, self.game.screen.get_height()//2)
             self.game.screen.blit(score_text, score_text_rect)
+            self.display_final_buttons()
+
+            if self.exit_button.draw(self.game.screen):
+                running = False
+                pygame.quit()
+
             pygame.display.update()
 
+    def setup_final_buttons(self):
+        restart_img = pygame.image.load("buttons_img/button_restart.png")
+        self.restart_button = Button.Button(500, 360, restart_img, 1)
 
+        exit_button_img = pygame.image.load("buttons_img/button_exit.png")
+        self.exit_button = Button.Button(500, 415, exit_button_img, 1)
+
+
+    def display_final_buttons(self):
+        if self.restart_button.draw(self.game.screen):
+            pygame.quit()
+            game = Game.Game()
+            game.main_menu()
 
 
