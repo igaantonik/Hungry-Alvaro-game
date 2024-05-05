@@ -2,9 +2,7 @@ import json
 
 import pygame
 import Button
-import HungryAlvaro
-import MoodyAlvaro
-import AlvaroWithTheBoys
+from game.modes import AlvaroWithTheBoys, HungryAlvaro, MoodyAlvaro
 from ScoreManager import ScoreManager
 
 class Game:
@@ -111,11 +109,11 @@ class Game:
 
     def play(self, mode, difficulty):
         if mode == 1:
-            chosen_mode = HungryAlvaro.HungryAlvaro(self, difficulty)
+            chosen_mode = HungryAlvaro.HungryAlvaro(self, difficulty, 'HungryAlvaro')
         elif mode == 2:
-            chosen_mode = MoodyAlvaro.MoodyAlvaro(self, difficulty)
+            chosen_mode = MoodyAlvaro.MoodyAlvaro(self, difficulty,'MoodyAlvaro')
         else:
-            chosen_mode = AlvaroWithTheBoys.AlvaroWithTheBoys(self, difficulty)
+            chosen_mode = AlvaroWithTheBoys.AlvaroWithTheBoys(self, difficulty, 'AlvaroWithTheBoys')
         chosen_mode.run()
 
     def draw_alvaro(self):

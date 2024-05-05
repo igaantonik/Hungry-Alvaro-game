@@ -1,5 +1,5 @@
 import pygame
-import Topping
+import game.Topping
 import random
 
 
@@ -20,14 +20,14 @@ class Pizza():
 
     def generate_pizza(self, toppings_amount, min_amount_topping, max_amount_topping):
         available_toppings = [i for i in range(2, 8)]
-        cheese = Topping.Topping(self.x, self.y, Topping.ToppingName(1), 1, self.scale)
+        cheese = game.Topping.Topping(self.x, self.y, game.Topping.ToppingName(1), 1, self.scale)
         self.toppings.append(cheese)
         random.shuffle(available_toppings)
 
         for i in range(toppings_amount):
             rand_amount = random.randint(min_amount_topping, max_amount_topping)
-            top = Topping.Topping(self.x + 50 * self.scale, self.y + 50 * self.scale,
-                                  Topping.ToppingName(available_toppings[i]), rand_amount, self.scale)
+            top = game.Topping.Topping(self.x + 50 * self.scale, self.y + 50 * self.scale,
+                                  game.Topping.ToppingName(available_toppings[i]), rand_amount, self.scale)
             self.add_topping(top)
 
     def draw_pizza(self, surface):
