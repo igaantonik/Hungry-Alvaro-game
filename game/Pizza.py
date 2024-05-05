@@ -16,7 +16,8 @@ class Pizza():
         self.toppings.append(topping)
 
     def remove_last_topping(self):
-        self.toppings.pop()
+        if len(self.toppings) > 0:
+            self.toppings.pop()
 
     def generate_pizza(self, toppings_amount, min_amount_topping, max_amount_topping):
         available_toppings = [i for i in range(2, 8)]
