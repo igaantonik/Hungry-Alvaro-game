@@ -62,10 +62,10 @@ class AbstractMode(ABC):
             pygame.display.update()
 
     def setup_final_buttons(self):
-        restart_img = pygame.image.load("buttons_img/button_restart.png")
+        restart_img = pygame.image.load("buttons/button_restart.png")
         self.restart_button = game.Button.Button(280, 360, restart_img, 1)
 
-        exit_button_img = pygame.image.load("buttons_img/button_exit.png")
+        exit_button_img = pygame.image.load("buttons/button_exit.png")
         self.exit_button = game.Button.Button(280, 415, exit_button_img, 1)
 
 

@@ -1,5 +1,4 @@
 import time
-
 import pygame
 import game.Button
 import game.Topping
@@ -28,6 +27,7 @@ class OrderAWTB(AbstractOrder):
                     color = pygame.Color(255, 255, 255)
                 position = order.display_order(position, color)
             else:
+                self.check_order()
                 self.mode.orders.remove(order)
                 self.mode.score -= 40
                 self.mode.next_order()
@@ -59,7 +59,7 @@ class OrderAWTB(AbstractOrder):
         return position
 
     def setup_order_name_button(self):
-        make_img = pygame.image.load("buttons_img/button_make.png")
+        make_img = pygame.image.load("buttons/button_make.png")
         if len(self.mode.orders) > 2:
             self.boy_name_button1 = game.Button.Button(715, 150, make_img, 0.5)
             self.boy_name_button2 = game.Button.Button(715, 350, make_img, 0.5)
@@ -82,8 +82,12 @@ class OrderAWTB(AbstractOrder):
     def display_order_timer(self, position):
         font = pygame.font.SysFont("", 25)
         timer = round(self.end_time - time.time(), 2)
+        if timer < 5:
+            color = pygame.Color(255, 0, 0)
+        else:
+            color = pygame.Color(117, 105, 104)
         text = ("left: " + str(timer))
-        timer_text = font.render(text, True, (117, 105, 104))
+        timer_text = font.render(text, True, color)
         timer_text_rect = timer_text.get_rect()
         timer_text_rect.topleft = (715, 110 + position * 22)
         self.played_game.screen.blit(timer_text, timer_text_rect)
@@ -106,7 +110,6 @@ class OrderAWTB(AbstractOrder):
 
 
     def make_order(self):
-        print(self.mode.orders)
         running = True
         while running:
 

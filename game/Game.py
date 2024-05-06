@@ -1,6 +1,8 @@
 import json
 
 import pygame
+from pygame import mixer
+
 import Button
 from game.modes import AlvaroWithTheBoys, HungryAlvaro, MoodyAlvaro
 from ScoreManager import ScoreManager
@@ -20,6 +22,11 @@ class Game:
             self.results = json.load(json_file)
 
     def main_menu(self):
+        mixer.init()
+        mixer.music.load("img/italian_music.mp3")
+        mixer.music.set_volume(0.2)
+        mixer.music.play(loops=-1)
+
         running = True
         while running:
 
@@ -84,34 +91,34 @@ class Game:
     def setup_buttons(self):
 
         # Hungry Alvaro button
-        hungry_alvaro_button_img = pygame.image.load("buttons_img/button_hungry-alvaro.png")
+        hungry_alvaro_button_img = pygame.image.load("buttons/button_hungry-alvaro.png")
         self.hungry_alvaro_button = Button.Button(500, 250, hungry_alvaro_button_img, 1)
 
         # Moody Alvaro button
-        moody_alvaro_button_img = pygame.image.load("buttons_img/button_moody-alvaro.png")
+        moody_alvaro_button_img = pygame.image.load("buttons/button_moody-alvaro.png")
         self.moody_alvaro_button = Button.Button(500, 305, moody_alvaro_button_img, 1)
 
         # Alvaro with the boys button
-        alvaro_with_the_boys_button_img = pygame.image.load("buttons_img/button_alvaro-with-the-boys.png")
+        alvaro_with_the_boys_button_img = pygame.image.load("buttons/button_alvaro-with-the-boys.png")
         self.alvaro_with_the_boys_button = Button.Button(500, 360, alvaro_with_the_boys_button_img, 1)
 
         # Exit button
-        exit_button_img = pygame.image.load("buttons_img/button_exit.png")
+        exit_button_img = pygame.image.load("buttons/button_exit.png")
         self.exit_button = Button.Button(500, 470, exit_button_img, 1)
 
         # Easy button
-        easy_button_img = pygame.image.load("buttons_img/button_easy.png")
+        easy_button_img = pygame.image.load("buttons/button_easy.png")
         self.easy_button = Button.Button(500, 250, easy_button_img, 1)
 
         # Medium button
-        medium_button_img = pygame.image.load("buttons_img/button_medium.png")
+        medium_button_img = pygame.image.load("buttons/button_medium.png")
         self.medium_button = Button.Button(500, 305, medium_button_img, 1)
 
         # Hard button
-        hard_button_img = pygame.image.load("buttons_img/button_hard.png")
+        hard_button_img = pygame.image.load("buttons/button_hard.png")
         self.hard_button = Button.Button(500, 360, hard_button_img, 1)
 
-        results_button_img = pygame.image.load("buttons_img/button_results.png")
+        results_button_img = pygame.image.load("buttons/button_results.png")
         self.results_button = Button.Button(500, 415, results_button_img, 1)
 
     def setup_text(self):
