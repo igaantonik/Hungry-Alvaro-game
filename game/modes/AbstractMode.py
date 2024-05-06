@@ -41,7 +41,8 @@ class AbstractMode(ABC):
 
         running = True
         while running:
-            self.game.screen.fill((242, 177, 202))
+            # self.game.screen.fill((242, 177, 202))
+            self.game.screen.fill((238, 229, 199))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -49,9 +50,11 @@ class AbstractMode(ABC):
 
             pygame.init()
             text = ("Your final score is: " + str(self.score))
-            score_text = self.game.font.render(text, True, (255, 255, 255))
+            # score_text = self.game.font.render(text, True, (255, 255, 255))
+            font = pygame.font.Font('fonts/genty/genty.ttf', 50)
+            score_text = font.render(text, True, (117, 105, 104))
             score_text_rect = score_text.get_rect()
-            score_text_rect.center = (self.game.screen.get_width() // 2, self.game.screen.get_height() // 2)
+            score_text_rect.center = (self.game.screen.get_width() // 2, self.game.screen.get_height() // 2 - 50)
             self.game.screen.blit(score_text, score_text_rect)
             self.display_final_buttons()
 
@@ -62,12 +65,11 @@ class AbstractMode(ABC):
             pygame.display.update()
 
     def setup_final_buttons(self):
-        restart_img = pygame.image.load("buttons/button_restart.png")
+        restart_img = pygame.image.load("buttons/button_restart2.png")
         self.restart_button = game.Button.Button(280, 360, restart_img, 1)
 
-        exit_button_img = pygame.image.load("buttons/button_exit.png")
+        exit_button_img = pygame.image.load("buttons/button_exit2.png")
         self.exit_button = game.Button.Button(280, 415, exit_button_img, 1)
-
 
     def display_final_buttons(self):
         if self.restart_button.draw(self.game.screen):
