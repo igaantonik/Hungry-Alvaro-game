@@ -91,21 +91,21 @@ class AbstractOrder(ABC):
         self.anchovie_button = game.Button.Button(15, 440, anchovie_img, 0.15)
 
         # "+", "-"
-        minus_img = pygame.image.load("buttons_img/minus_button.png")
+        minus_img = pygame.image.load("buttons/minus_button.png")
         self.minus_button = game.Button.Button(240, 80, minus_img, 0.07)
 
-        plus_img = pygame.image.load("buttons_img/plus_button.png")
+        plus_img = pygame.image.load("buttons/plus_button.png")
         self.plus_button = game.Button.Button(280, 80, plus_img, 0.07)
 
         # Add, Back
-        back_img = pygame.image.load("buttons_img/back_button.png")
+        back_img = pygame.image.load("buttons/back_button.png")
         self.back_button = game.Button.Button(15, 500, back_img, 0.25)
 
-        add_img = pygame.image.load("buttons_img/add_button.png")
+        add_img = pygame.image.load("buttons/add_button.png")
         self.add_button = game.Button.Button(90, 500, add_img, 0.25)
 
         # Done
-        done_img = pygame.image.load("buttons_img/done_button.png")
+        done_img = pygame.image.load("buttons/done_button.png")
         self.done_button = game.Button.Button(450, 500, done_img, 0.25)
 
 
