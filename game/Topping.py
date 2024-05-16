@@ -5,16 +5,17 @@ from enum import Enum
 class ToppingName(Enum):
     CHEESE = 1
     SALAMI = 2
+    MUSHROOMS = 3
+    PINEAPPLE = 4
     HAM = 5
     SHRIMP = 6
     ANCHOVIES = 7
-    MUSHROOMS = 3
-    ONIONS = 8
-    PEPPERS = 9
-    OLIVES = 10
-    CORN = 11
+    PEPPERS = 8
+    GREEN_OLIVES = 9
+    BLACK_OLIVES = 10
+    BACON = 11
     TOMATOES = 12
-    PINEAPPLE = 4
+    ONIONS = 13
     SPINACH = 14
     ARUGULA = 15
 
@@ -35,22 +36,35 @@ class Topping():
             self.image = pygame.image.load("img/cheese.png")
 
         if self.name.value == 2:
-            self.image = pygame.image.load("img/salami.png")
+            self.image = pygame.image.load("img/salami_final.png")
 
         if self.name.value == 3:
-            self.image = pygame.image.load("img/mushrooms.png")
+            self.image = pygame.image.load("img/mashrooms_final.png")
 
         if self.name.value == 4:
-            self.image = pygame.image.load("img/pineapple.png")
+            self.image = pygame.image.load("img/pinapple_final.png")
 
         if self.name.value == 5:
-            self.image = pygame.image.load("img/ham.png")
+            self.image = pygame.image.load("img/ham_final.png")
 
         if self.name.value == 6:
-            self.image = pygame.image.load("img/shrimp.png")
+            self.image = pygame.image.load("img/shrimp_final.png")
 
         if self.name.value == 7:
-            self.image = pygame.image.load("img/anchovies.png")
+            self.image = pygame.image.load("img/anchovies_final.png")
+
+        if self.name.value == 8:
+            self.image = pygame.image.load("img/peppers_final.png")
+
+        if self.name.value == 9:
+            self.image = pygame.image.load("img/green_olives_final.png")
+
+        if self.name.value == 10:
+            self.image = pygame.image.load("img/black_olives_final.png")
+
+        if self.name.value == 11:
+            self.image = pygame.image.load("img/bacon_final.png")
+
 
         # more to do
 
@@ -63,5 +77,6 @@ class Topping():
             surface.blit(image, (self.rect.x, self.rect.y))
 
     def __str__(self):
-        formatted_name = self.name.name.replace("_", " ").title()
+        formatted_name = self.name.name.replace("_", " ")
+        # formatted_name = self.name.name.replace("_", " ").title()
         return formatted_name

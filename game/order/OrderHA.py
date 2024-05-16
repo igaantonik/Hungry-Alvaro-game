@@ -10,17 +10,20 @@ class OrderHA(AbstractOrder):
 
     def display_order(self, position=0,color=1):
         # position = 0
+        font = pygame.font.Font('fonts/yellowtail/yellowtail.ttf', 40)
         text = str(self.order_owner)
-        topping_text = self.played_game.font.render(text, True, (207, 62, 62))
+        topping_text = font.render(text, True, (207, 62, 62))
         topping_text_rect = topping_text.get_rect()
-        topping_text_rect.topleft = (540, 20)
-        position += 1
+        topping_text_rect.topleft = (550, 20)
+        position += 2
+        font = pygame.font.Font('fonts/yellowtail/yellowtail.ttf', 20)
         self.played_game.screen.blit(topping_text, topping_text_rect)
         for topping in self.required_pizza.toppings:
             text = (str(topping) + " x " + str(topping.quantity))
-            topping_text = self.played_game.font.render(text, True, (255, 255, 255))
+            # topping_text = self.played_game.font.render(text, True, (255, 255, 255))
+            topping_text = font.render(text, True,  (117, 105, 104))
             topping_text_rect = topping_text.get_rect()
-            topping_text_rect.topleft = (540, 30 + position * 30)
+            topping_text_rect.topleft = (550, 30 + position * 30)
             self.played_game.screen.blit(topping_text, topping_text_rect)
             position += 1
 
@@ -28,7 +31,8 @@ class OrderHA(AbstractOrder):
         running = True
         while running:
 
-            self.played_game.screen.fill((242, 177, 202))
+            # self.played_game.screen.fill((242, 177, 202))
+            self.played_game.screen.fill((238, 229, 199))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False

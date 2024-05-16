@@ -15,7 +15,7 @@ class Game:
         pygame.display.set_caption("Pizza Game")
         icon = pygame.image.load("img/pizzaicon.png")
         pygame.display.set_icon(icon)
-        self.font = pygame.font.SysFont("", 40)
+        self.font = pygame.font.Font('fonts/yellowtail/yellowtail.ttf', 30)
         self.setup_buttons()
         self.setup_text()
         with open("results.json", "r") as json_file:
@@ -23,14 +23,15 @@ class Game:
 
     def main_menu(self):
         mixer.init()
-        mixer.music.load("img/italian_music.mp3")
+        mixer.music.load("music/italian_music.mp3")
         mixer.music.set_volume(0.2)
         mixer.music.play(loops=-1)
 
         running = True
         while running:
 
-            self.screen.fill((242, 177, 202))
+            # self.screen.fill((242, 177, 202))
+            self.screen.fill((239, 233, 208))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -48,15 +49,18 @@ class Game:
             if self.exit_button.draw(self.screen):
                 running = False
 
+            self.screen.blit(self.intro_text_2,self.intro_text_2_rect)
             self.screen.blit(self.intro_text, self.intro_text_rect)
-            self.draw_alvaro()
+            # self.draw_alvaro()
+            self.draw_pizza_image()
             pygame.display.update()
 
     def choose_difficulty(self, mode):
         running = True
         while running:
 
-            self.screen.fill((242, 177, 202))
+            # self.screen.fill((242, 177, 202))
+            self.screen.fill((239, 233, 208))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -88,44 +92,53 @@ class Game:
         self.screen.blit(self.alvaroImg, (100, 450))
         self.screen.blit(self.ciaoImg, (150, 300))
 
+    def draw_pizza_image(self):
+        self.pizza_image = pygame.image.load("img/pizza_start.png")
+        self.screen.blit(self.pizza_image, (120, 280))
+
     def setup_buttons(self):
 
         # Hungry Alvaro button
-        hungry_alvaro_button_img = pygame.image.load("buttons/button_hungry-alvaro.png")
-        self.hungry_alvaro_button = Button.Button(500, 250, hungry_alvaro_button_img, 1)
+        hungry_alvaro_button_img = pygame.image.load("buttons/buttonHA.png")
+        self.hungry_alvaro_button = Button.Button(500, 270, hungry_alvaro_button_img, 1)
 
         # Moody Alvaro button
-        moody_alvaro_button_img = pygame.image.load("buttons/button_moody-alvaro.png")
-        self.moody_alvaro_button = Button.Button(500, 305, moody_alvaro_button_img, 1)
+        moody_alvaro_button_img = pygame.image.load("buttons/buttonMA2.png")
+        self.moody_alvaro_button = Button.Button(500, 325, moody_alvaro_button_img, 1)
 
         # Alvaro with the boys button
-        alvaro_with_the_boys_button_img = pygame.image.load("buttons/button_alvaro-with-the-boys.png")
-        self.alvaro_with_the_boys_button = Button.Button(500, 360, alvaro_with_the_boys_button_img, 1)
+        alvaro_with_the_boys_button_img = pygame.image.load("buttons/buttonAWTB.png")
+        self.alvaro_with_the_boys_button = Button.Button(500, 380, alvaro_with_the_boys_button_img, 1)
 
         # Exit button
-        exit_button_img = pygame.image.load("buttons/button_exit.png")
-        self.exit_button = Button.Button(500, 470, exit_button_img, 1)
+        exit_button_img = pygame.image.load("buttons/button_exit2.png")
+        self.exit_button = Button.Button(500, 490, exit_button_img, 1)
 
         # Easy button
-        easy_button_img = pygame.image.load("buttons/button_easy.png")
+        easy_button_img = pygame.image.load("buttons/button_easy2.png")
         self.easy_button = Button.Button(500, 250, easy_button_img, 1)
 
         # Medium button
-        medium_button_img = pygame.image.load("buttons/button_medium.png")
+        medium_button_img = pygame.image.load("buttons/button_medium2.png")
         self.medium_button = Button.Button(500, 305, medium_button_img, 1)
 
         # Hard button
-        hard_button_img = pygame.image.load("buttons/button_hard.png")
+        hard_button_img = pygame.image.load("buttons/button_hard2.png")
         self.hard_button = Button.Button(500, 360, hard_button_img, 1)
 
-        results_button_img = pygame.image.load("buttons/button_results.png")
-        self.results_button = Button.Button(500, 415, results_button_img, 1)
+        results_button_img = pygame.image.load("buttons/button_results2.png")
+        self.results_button = Button.Button(500, 435, results_button_img, 1)
 
     def setup_text(self):
-        self.intro_text = pygame.font.SysFont("",50).render("Choose your mode", True, (255, 255, 255))
-        self.intro_text_rect = self.intro_text.get_rect()
-        self.intro_text_rect.center = (250, 170)
+        # (255, 255, 255)
+        self.intro_text_2 = pygame.font.Font('fonts/genty/genty.ttf', 60).render("Bake pizza for Alvaro!", True, (29, 91, 76))
+        self.intro_text_2_rect = self.intro_text_2.get_rect()
+        self.intro_text_2_rect.topleft = (60, 80)
 
-        self.difficulty_text = pygame.font.SysFont("",50).render("Choose your difficulty", True, (255, 255, 255))
+        self.intro_text = pygame.font.Font('fonts/genty/genty.ttf', 50).render("Choose your mode", True, (29, 91, 76))
+        self.intro_text_rect = self.intro_text.get_rect()
+        self.intro_text_rect.topleft = (60, 180)
+
+        self.difficulty_text = pygame.font.Font('fonts/genty/genty.ttf', 50).render("Choose your difficulty", True, (29, 91, 76))
         self.difficulty_text_rect = self.difficulty_text.get_rect()
-        self.difficulty_text_rect.center = (250, 170)
+        self.difficulty_text_rect.topleft = (60, 150)

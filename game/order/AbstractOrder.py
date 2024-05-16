@@ -19,7 +19,7 @@ class AbstractOrder(ABC):
         self.toppings_amount = toppings_amount
         self.required_pizza = game.Pizza.Pizza(pizza.x, pizza.y, pizza.scale)
         self.required_pizza.generate_pizza(toppings_amount, min_amount, max_amount)
-        self.counter = game.Counter.Counter(170, 80, played_game)
+        self.counter = game.Counter.Counter(200, 80, played_game)
         self.pressed_topping = None
         self.order_owner = order_owner
         self.setup_buttons()
@@ -39,14 +39,16 @@ class AbstractOrder(ABC):
         else:
             text = "Choose topping"
 
-        topping_text = self.played_game.font.render(text, True, (255, 255, 255))
+        # topping_text = self.played_game.font.render(text, True, (255, 255, 255))
+        topping_text = self.played_game.font.render(text, True, (117, 105, 104))
         topping_text_rect = topping_text.get_rect()
         topping_text_rect.topleft = (170, 30)
         self.played_game.screen.blit(topping_text, topping_text_rect)
 
     def display_score(self):
         text = ("Score: " + str(self.mode.score))
-        score_text = self.played_game.font.render(text, True, (255, 255, 255))
+        # score_text = self.played_game.font.render(text, True, (255, 255, 255))
+        score_text = self.played_game.font.render(text, True, (117, 105, 104))
         score_text_rect = score_text.get_rect()
         score_text_rect.topleft = (280, 520)
         self.played_game.screen.blit(score_text, score_text_rect)
@@ -54,7 +56,8 @@ class AbstractOrder(ABC):
     def display_timer(self):
         timer = round(self.mode.end_time - time.time(), 2)
         text = ("Time left: " + str(timer))
-        timer_text = self.played_game.font.render(text, True, (255, 255, 255))
+        # timer_text = self.played_game.font.render(text, True, (255, 255, 255))
+        timer_text = self.played_game.font.render(text, True, (117, 105, 104))
         timer_text_rect = timer_text.get_rect()
         timer_text_rect.topleft = (170, 5)
         self.played_game.screen.blit(timer_text, timer_text_rect)
@@ -69,7 +72,7 @@ class AbstractOrder(ABC):
 
     def setup_buttons(self):
         # Toppings
-        cheese_img = pygame.image.load("img/cheese.png")
+        cheese_img = pygame.image.load("img/cheese2.png")
         self.cheese_button = game.Button.Button(15, 10, cheese_img, 0.15)
 
         mushrooms_img = pygame.image.load("img/mushroom.png")
@@ -79,7 +82,7 @@ class AbstractOrder(ABC):
         self.salami_button = game.Button.Button(15, 150, salami_img, 0.15)
 
         pineapple_img = pygame.image.load("img/pinapple1.png")
-        self.pineapple_button = game.Button.Button(15, 230, pineapple_img, 0.15)
+        self.pineapple_button = game.Button.Button(100, 300, pineapple_img, 0.15)
 
         ham_img = pygame.image.load("img/ham1.png")
         self.ham_button = game.Button.Button(15, 300, ham_img, 0.15)
@@ -88,7 +91,20 @@ class AbstractOrder(ABC):
         self.shrimp_button = game.Button.Button(15, 370, shrimp_img, 0.15)
 
         anchovie_img = pygame.image.load("img/fish1.png")
-        self.anchovie_button = game.Button.Button(15, 440, anchovie_img, 0.15)
+        self.anchovie_button = game.Button.Button(80, 80, anchovie_img, 0.15)
+
+        pepper_img = pygame.image.load("img/pepper1.png")
+        self.pepper_button = game.Button.Button(100, 370, pepper_img, 0.15)
+
+        black_olive_img = pygame.image.load("img/olive_black1.png")
+        self.black_olive_button = game.Button.Button(100, 150, black_olive_img, 0.15)
+
+        green_olive_img = pygame.image.load("img/olive_green1.png")
+        self. green_olive_button = game.Button.Button(100, 230,  green_olive_img, 0.15)
+
+        bacon_img = pygame.image.load("img/bacon2.png")
+        self.bacon_button = game.Button.Button(5, 210, bacon_img, 0.20)
+
 
         # "+", "-"
         minus_img = pygame.image.load("buttons/minus_button.png")
@@ -118,33 +134,33 @@ class AbstractOrder(ABC):
             self.pressed_topping = top
             self.counter.restart()
         if self.mushrooms_button.draw(self.played_game.screen):
-            top = game.Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+            top = game.Topping.Topping(self.pizza.x + 100 * self.pizza.scale, self.pizza.y + 70 * self.pizza.scale,
                                   game.Topping.ToppingName(3), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
             self.counter.restart()
         if self.salami_button.draw(self.played_game.screen):
-            top = game.Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+            top = game.Topping.Topping(self.pizza.x + 100 * self.pizza.scale, self.pizza.y + 90 * self.pizza.scale,
                                   game.Topping.ToppingName(2), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
             self.counter.restart()
         if self.pineapple_button.draw(self.played_game.screen):
-            top = game.Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+            top = game.Topping.Topping(self.pizza.x + 80 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
                                   game.Topping.ToppingName(4),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
             self.counter.restart()
         if self.ham_button.draw(self.played_game.screen):
-            top = game.Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+            top = game.Topping.Topping(self.pizza.x + 100 * self.pizza.scale, self.pizza.y + 80 * self.pizza.scale,
                                   game.Topping.ToppingName(5),
                                   1,
                                   self.pizza.scale)
             self.pressed_topping = top
             self.counter.restart()
         if self.shrimp_button.draw(self.played_game.screen):
-            top = game.Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+            top = game.Topping.Topping(self.pizza.x + 100 * self.pizza.scale, self.pizza.y + 80 * self.pizza.scale,
                                   game.Topping.ToppingName(6),
                                   1,
                                   self.pizza.scale)
@@ -152,9 +168,37 @@ class AbstractOrder(ABC):
             self.counter.restart()
 
         if self.anchovie_button.draw(self.played_game.screen):
-            top = game.Topping.Topping(self.pizza.x + 50 * self.pizza.scale, self.pizza.y + 50 * self.pizza.scale,
+            top = game.Topping.Topping(self.pizza.x + 160 * self.pizza.scale, self.pizza.y + 140 * self.pizza.scale,
                                   game.Topping.ToppingName(7),
                                   1,
+                                  self.pizza.scale)
+            self.pressed_topping = top
+            self.counter.restart()
+
+        if self.pepper_button.draw(self.played_game.screen):
+            top = game.Topping.Topping(self.pizza.x + 180 * self.pizza.scale, self.pizza.y + 140 * self.pizza.scale,
+                                  game.Topping.ToppingName(8), 1,
+                                  self.pizza.scale)
+            self.pressed_topping = top
+            self.counter.restart()
+
+        if self.black_olive_button.draw(self.played_game.screen):
+            top = game.Topping.Topping(self.pizza.x +100 * self.pizza.scale, self.pizza.y + 90 * self.pizza.scale,
+                                  game.Topping.ToppingName(10), 1,
+                                  self.pizza.scale)
+            self.pressed_topping = top
+            self.counter.restart()
+
+        if self.green_olive_button.draw(self.played_game.screen):
+            top = game.Topping.Topping(self.pizza.x + 80 * self.pizza.scale, self.pizza.y + 70 * self.pizza.scale,
+                                  game.Topping.ToppingName(9), 1,
+                                  self.pizza.scale)
+            self.pressed_topping = top
+            self.counter.restart()
+
+        if self.bacon_button.draw(self.played_game.screen):
+            top = game.Topping.Topping(self.pizza.x + 80 * self.pizza.scale, self.pizza.y + 70 * self.pizza.scale,
+                                  game.Topping.ToppingName(11), 1,
                                   self.pizza.scale)
             self.pressed_topping = top
             self.counter.restart()
