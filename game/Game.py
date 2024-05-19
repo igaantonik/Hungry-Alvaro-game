@@ -7,7 +7,16 @@ import Button
 from game.modes import AlvaroWithTheBoys, HungryAlvaro, MoodyAlvaro
 from ScoreManager import ScoreManager
 
-
+BUTTON_IMAGES = {
+    "hungry_alvaro": "buttons/buttonHA.png",
+    "moody_alvaro": "buttons/buttonMA2.png",
+    "alvaro_with_the_boys": "buttons/buttonAWTB.png",
+    "exit": "buttons/button_exit2.png",
+    "easy": "buttons/button_easy2.png",
+    "medium": "buttons/button_medium2.png",
+    "hard": "buttons/button_hard2.png",
+    "results": "buttons/button_results2.png"
+}
 class Game:
     def __init__(self):
         pygame.init()
@@ -30,7 +39,6 @@ class Game:
         running = True
         while running:
 
-            # self.screen.fill((242, 177, 202))
             self.screen.fill((239, 233, 208))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -51,7 +59,6 @@ class Game:
 
             self.screen.blit(self.intro_text_2,self.intro_text_2_rect)
             self.screen.blit(self.intro_text, self.intro_text_rect)
-            # self.draw_alvaro()
             self.draw_pizza_image()
             pygame.display.update()
 
@@ -59,7 +66,6 @@ class Game:
         running = True
         while running:
 
-            # self.screen.fill((242, 177, 202))
             self.screen.fill((239, 233, 208))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -97,40 +103,21 @@ class Game:
         self.screen.blit(self.pizza_image, (120, 280))
 
     def setup_buttons(self):
-
-        # Hungry Alvaro button
-        hungry_alvaro_button_img = pygame.image.load("buttons/buttonHA.png")
-        self.hungry_alvaro_button = Button.Button(500, 270, hungry_alvaro_button_img, 1)
-
-        # Moody Alvaro button
-        moody_alvaro_button_img = pygame.image.load("buttons/buttonMA2.png")
-        self.moody_alvaro_button = Button.Button(500, 325, moody_alvaro_button_img, 1)
-
-        # Alvaro with the boys button
-        alvaro_with_the_boys_button_img = pygame.image.load("buttons/buttonAWTB.png")
-        self.alvaro_with_the_boys_button = Button.Button(500, 380, alvaro_with_the_boys_button_img, 1)
-
-        # Exit button
-        exit_button_img = pygame.image.load("buttons/button_exit2.png")
-        self.exit_button = Button.Button(500, 490, exit_button_img, 1)
-
-        # Easy button
-        easy_button_img = pygame.image.load("buttons/button_easy2.png")
-        self.easy_button = Button.Button(500, 250, easy_button_img, 1)
-
-        # Medium button
-        medium_button_img = pygame.image.load("buttons/button_medium2.png")
-        self.medium_button = Button.Button(500, 305, medium_button_img, 1)
-
-        # Hard button
-        hard_button_img = pygame.image.load("buttons/button_hard2.png")
-        self.hard_button = Button.Button(500, 360, hard_button_img, 1)
-
-        results_button_img = pygame.image.load("buttons/button_results2.png")
-        self.results_button = Button.Button(500, 435, results_button_img, 1)
+        button_data = [
+            ("hungry_alvaro", 500, 270),
+            ("moody_alvaro", 500, 325),
+            ("alvaro_with_the_boys", 500, 380),
+            ("exit", 500, 490),
+            ("easy", 500, 250),
+            ("medium", 500, 305),
+            ("hard", 500, 360),
+            ("results", 500, 435)
+        ]
+        for name, x, y in button_data:
+            img = pygame.image.load(BUTTON_IMAGES[name])
+            setattr(self, f"{name}_button", Button.Button(x, y, img, 1))
 
     def setup_text(self):
-        # (255, 255, 255)
         self.intro_text_2 = pygame.font.Font('fonts/genty/genty.ttf', 60).render("Bake pizza for Alvaro!", True, (29, 91, 76))
         self.intro_text_2_rect = self.intro_text_2.get_rect()
         self.intro_text_2_rect.topleft = (60, 80)

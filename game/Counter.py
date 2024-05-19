@@ -17,6 +17,5 @@ class Counter:
             self.value -= 1
 
     def draw(self):
-        # counter_text = self.game.font.render(str(self.value), True, (255, 255, 255))
         counter_text = self.game.font.render(str(self.value), True, (117, 105, 104))
         self.game.screen.blit(counter_text, (self.x, self.y))
