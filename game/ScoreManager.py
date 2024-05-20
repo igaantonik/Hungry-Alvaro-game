@@ -25,7 +25,6 @@ class ScoreManager:
     def display_results(self):
         running = True
         while running:
-            # self.screen.fill((242, 177, 202))
             self.screen.fill((238,229, 199))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

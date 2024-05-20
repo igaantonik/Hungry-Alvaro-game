@@ -22,10 +22,8 @@ class OrderAWTB(AbstractOrder):
                 order.display_order_name_button(n)
                 n += 1
                 if order == self:
-                    # color = pygame.Color(117, 105, 104)
                     color = pygame.Color(210, 46, 31)
                 else:
-                    # color = pygame.Color(255, 255, 255)
                     color = pygame.Color(117, 105, 104)
                 position = order.display_order(position, color)
             else:
@@ -99,7 +97,6 @@ class OrderAWTB(AbstractOrder):
     def display_timer(self):
         timer = round(self.mode.end_time - time.time(), 2)
         text = "Time left: " + (str(timer))
-        # timer_text = self.played_game.font.render(text, True, (255, 255, 255))
         timer_text = self.played_game.font.render(text, True, (117, 105, 104))
         timer_text_rect = timer_text.get_rect()
         timer_text_rect.topleft = (340, 80)
@@ -107,7 +104,6 @@ class OrderAWTB(AbstractOrder):
 
     def display_order_name(self):
         text = ("Order for: " + self.order_owner)
-        # owner_text = self.played_game.font.render(text, True, (207, 62, 62))
         owner_text = self.played_game.font.render(text, True, (210, 46, 31))
         owner_text_rect = owner_text.get_rect()
         owner_text_rect.topleft = (170, 5)
@@ -117,8 +113,6 @@ class OrderAWTB(AbstractOrder):
     def make_order(self):
         running = True
         while running:
-
-            # self.played_game.screen.fill((242, 177, 202))
             self.played_game.screen.fill((238, 229, 199))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

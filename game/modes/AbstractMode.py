@@ -41,7 +41,6 @@ class AbstractMode(ABC):
 
         running = True
         while running:
-            # self.game.screen.fill((242, 177, 202))
             self.game.screen.fill((238, 229, 199))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -50,7 +49,6 @@ class AbstractMode(ABC):
 
             pygame.init()
             text = ("Your final score is: " + str(self.score))
-            # score_text = self.game.font.render(text, True, (255, 255, 255))
             font = pygame.font.Font('fonts/genty/genty.ttf', 50)
             score_text = font.render(text, True, (117, 105, 104))
             score_text_rect = score_text.get_rect()

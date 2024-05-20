@@ -14,59 +14,31 @@ class ToppingName(Enum):
     GREEN_OLIVES = 9
     BLACK_OLIVES = 10
     BACON = 11
-    TOMATOES = 12
-    ONIONS = 13
-    SPINACH = 14
-    ARUGULA = 15
 
 
 class Topping():
+    IMAGE_PATHS = {
+        ToppingName.CHEESE: "img/cheese.png",
+        ToppingName.SALAMI: "img/salami_final.png",
+        ToppingName.MUSHROOMS: "img/mashrooms_final.png",
+        ToppingName.PINEAPPLE: "img/pinapple_final.png",
+        ToppingName.HAM: "img/ham_final.png",
+        ToppingName.SHRIMP: "img/shrimp_final.png",
+        ToppingName.ANCHOVIES: "img/anchovies_final.png",
+        ToppingName.PEPPERS: "img/peppers_final.png",
+        ToppingName.GREEN_OLIVES: "img/green_olives_final.png",
+        ToppingName.BLACK_OLIVES: "img/black_olives_final.png",
+        ToppingName.BACON: "img/bacon_final.png"
+    }
+
     def __init__(self, x, y, name, quantity, scale):
         self.x = x
         self.y = y
         self.scale = scale
         self.name = name
         self.quantity = quantity
-        self.image = None
+        self.image = pygame.image.load(self.IMAGE_PATHS[name])
         self.rect = None
-        self.set_image()
-
-    def set_image(self):
-        if self.name.value == 1:
-            self.image = pygame.image.load("img/cheese.png")
-
-        if self.name.value == 2:
-            self.image = pygame.image.load("img/salami_final.png")
-
-        if self.name.value == 3:
-            self.image = pygame.image.load("img/mashrooms_final.png")
-
-        if self.name.value == 4:
-            self.image = pygame.image.load("img/pinapple_final.png")
-
-        if self.name.value == 5:
-            self.image = pygame.image.load("img/ham_final.png")
-
-        if self.name.value == 6:
-            self.image = pygame.image.load("img/shrimp_final.png")
-
-        if self.name.value == 7:
-            self.image = pygame.image.load("img/anchovies_final.png")
-
-        if self.name.value == 8:
-            self.image = pygame.image.load("img/peppers_final.png")
-
-        if self.name.value == 9:
-            self.image = pygame.image.load("img/green_olives_final.png")
-
-        if self.name.value == 10:
-            self.image = pygame.image.load("img/black_olives_final.png")
-
-        if self.name.value == 11:
-            self.image = pygame.image.load("img/bacon_final.png")
-
-
-        # more to do
 
     def draw(self, surface):
         if self.image:
@@ -78,5 +50,4 @@ class Topping():
 
     def __str__(self):
         formatted_name = self.name.name.replace("_", " ")
-        # formatted_name = self.name.name.replace("_", " ").title()
         return formatted_name
